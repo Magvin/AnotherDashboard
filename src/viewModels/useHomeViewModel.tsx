@@ -1,11 +1,11 @@
 import { useApplication } from "../common/app/provider"
 import { useRef } from "react"
-import { HomeViewModel } from "./homeViewModel"
-import { HOME_SERVICE_KEY } from "../constants/application"
+import { TableViewModel } from "./tableViewModel"
+import { TABLE_SERVICE_KEY } from "../constants/application"
 
-const useHomeViewModel = (homeViewModel?: HomeViewModel) => {
+const useHomeViewModel = (tableViewModel?: TableViewModel) => {
   const app = useApplication()
-  const viewModel = useRef(homeViewModel || app.getService<any>(HOME_SERVICE_KEY))
+  const viewModel = useRef(tableViewModel || app.getService<TableViewModel>(TABLE_SERVICE_KEY))
   return viewModel.current
 }
 

@@ -1,3 +1,4 @@
+import { createTheme, ThemeProvider } from "@mui/material"
 import { configure } from "mobx"
 import { Observer } from "mobx-react"
 import React from "react"
@@ -7,30 +8,35 @@ import { Application } from "./common/app/application"
 import { AppProvider } from "./common/app/provider"
 import "./index.css"
 import reportWebVitals from "./reportWebVitals"
-import { initializeHome } from "./viewModels/initHomeViewModel"
+import { initializeHome } from "./viewModels/initTableViewModel"
 configure({
   enforceActions: "always",
   computedRequiresReaction: true,
   reactionRequiresObservable: true,
-  observableRequiresReaction: true,
-  disableErrorBoundaries: true,
 })
 const application = new Application()
 initializeHome(application)
+const theme = createTheme({
+  typography: {
+    fontFamily: `'Mulish', sans-serif`,
+  },
+})
 
 ReactDOM.render(
   <AppProvider application={application}>
-    <Observer>
-      {() => (
-        <BrowserRouter>
-          <Routes>
-            {application.features.map((feature) => (
-              <Route key={feature.key} path={feature.path} element={feature.getView()} />
-            ))}
-          </Routes>
-        </BrowserRouter>
-      )}
-    </Observer>
+    <ThemeProvider theme={theme}>
+      <Observer>
+        {() => (
+          <BrowserRouter>
+            <Routes>
+              {application.features.map((feature) => (
+                <Route key={feature.key} path={feature.path} element={feature.getView()} />
+              ))}
+            </Routes>
+          </BrowserRouter>
+        )}
+      </Observer>
+    </ThemeProvider>
   </AppProvider>,
   document.getElementById("root")
 )

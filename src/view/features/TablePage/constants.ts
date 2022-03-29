@@ -1,15 +1,15 @@
 export const headerCells = [
   {
-    id: "1",
+    id: "status",
     label: "STATUS",
   },
-  { id: "2", label: "APP TITLE & PUBLISHER" },
-  { id: "3", label: "" },
+  { id: "title", label: "APP TITLE & PUBLISHER" },
+  { id: "featured", label: "" },
 
-  { id: "4", label: "DAILY AVAILS" },
-  { id: "5", label: "DATE ADDED" },
-  { id: "6", label: "UPDATED ON" },
-  { id: "7", label: "AGE" },
-  { id: "8", label: "CATEGORY" },
+  { id: "avails", label: "DAILY AVAILS" },
+  { id: "createdAt", label: "DATE ADDED" },
+  { id: "updatedAt", label: "UPDATED ON" },
+  { id: "contentRating", label: "AGE" },
+  { id: "tags", label: "CATEGORY" },
   { id: "9", label: "" },
 ]

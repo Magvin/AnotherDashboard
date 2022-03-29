@@ -12,10 +12,9 @@ import styled from "@emotion/styled"
 import { observer } from "mobx-react"
 
 export const DataTable = observer(() => {
-  const [order, setOrder] = React.useState<TOrder>("asc")
   const [selected, setSelected] = React.useState<readonly string[]>([])
-  const [orderBy, setOrderBy] = React.useState<keyof IData>("UPDATED ON")
-  const { pageNumber, pageSize, setPageNumber, setPageSize, totalPages } = useHomeViewModel()
+  const { pageNumber, pageSize, setPageNumber, setPageSize, totalPages, orderBy, setOrderBy, order, setOrder } =
+    useHomeViewModel()
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IData) => {
     const isAsc = orderBy === property && order === "asc"

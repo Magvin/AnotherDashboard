@@ -5,12 +5,16 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import TableSortLabel from "@mui/material/TableSortLabel"
 import Box from "@mui/material/Box"
-import { EnhancedTableProps } from "./types"
+import { EnhancedTableProps, IData } from "./types"
 import { headerCells } from "../constants"
 import { TypographyAdmix } from "../../../../common/app/components/typography"
 import { styled } from "@mui/material"
 export function DataTableHead(props: EnhancedTableProps) {
-  const { order, orderBy } = props
+  const { order, orderBy, onRequestSort } = props
+  const createSortHandler = (property: keyof IData) => (event: React.MouseEvent<unknown>) => {
+    onRequestSort(event, property)
+  }
+
   return (
     <TableHead>
       <TableRow>
@@ -26,16 +30,15 @@ export function DataTableHead(props: EnhancedTableProps) {
               <TableSortLabel
                 active={orderBy === headerCell.id}
                 direction={orderBy === headerCell.id ? order : "asc"}
-                onClick={() => {}}
+                onClick={createSortHandler(headerCell.id as keyof IData)}
                 hideSortIcon={hideSort}
-                IconComponent={() => <OverideCodeIconStyle fontSize="small" />}
+                IconComponent={() => {
+                  return <OverideCodeIconStyle fontSize="small" />
+                }}
               >
                 <TypographyAdmix type="boldSmall" color="#858798">
                   {headerCell.label}
                 </TypographyAdmix>
-                {orderBy === headerCell.id ? (
-                  <Box component="span">{order === "desc" ? "sorted descending" : "sorted ascending"}</Box>
-                ) : null}
               </TableSortLabel>
             </TableCell>
           )

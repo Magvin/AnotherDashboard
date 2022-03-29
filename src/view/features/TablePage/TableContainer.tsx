@@ -7,7 +7,7 @@ import { AutoCompleteSearch } from "./components/autoComplete"
 import { DataTable } from "./components/DataTable"
 
 export const TableContainer = observer(() => {
-  const { fetchData, pageNumber, pageSize } = useHomeViewModel()
+  const { fetchData, pageNumber, pageSize, orderBy, order } = useHomeViewModel()
 
   const getData = React.useCallback(async () => {
     return await fetchData({ pageNumber, pageSize })
@@ -19,7 +19,7 @@ export const TableContainer = observer(() => {
 
   React.useEffect(() => {
     loadData()
-  }, [pageNumber, pageSize])
+  }, [pageNumber, pageSize, order, orderBy])
 
   return (
     <Box

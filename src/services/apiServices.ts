@@ -13,7 +13,7 @@ export class ApiService {
     },
   })
 
-  async fetchProductData(pageIndex: number, pageSize: number, search?: any) {
+  async fetchProductData(pageIndex: number, pageSize: number, search?: any, sort?: any) {
     if (this.apiKey?.length === 0 || this.apiKey === undefined) {
       throw Error("API key is not defined")
     }
@@ -24,12 +24,17 @@ export class ApiService {
       pageIndex: number
       pageSize: number
       filters?: any
+      sorts?: any
     } = {
       pageIndex: pageIndex,
       pageSize: pageSize,
     }
     if (search) {
       bodyQuery.filters = [{ name: "title", value: search, operator: "like" }]
+    }
+
+    if (sort) {
+      bodyQuery.sorts = [{ field: sort.sortBY, desc: sort.sortOrder === "desc" ? true : false }]
     }
 
     const response = await this.transport.post("http://localhost:3000/challenge-v1/fetch", bodyQuery, { headers })

@@ -1,6 +1,7 @@
 import { ApiService } from "../services/apiServices"
 import { action, computed, makeAutoObservable, observable, runInAction } from "mobx"
 import { TPost } from "./types"
+import { IData, TOrder } from "../view/features/TablePage/components/types"
 export interface ITableViewModel {
   data: TPost[]
   totalPages: number
@@ -12,6 +13,8 @@ export interface ITableViewModel {
   searchString: string
   pageNumber: number
   pageSize: number
+  orderBy: keyof IData
+  order: TOrder
 }
 
 export class TableViewModel implements ITableViewModel {
@@ -20,6 +23,8 @@ export class TableViewModel implements ITableViewModel {
   @observable pageSize: number = 10
   @observable autoCompleteData: any[] = []
   @observable searchString: string = ""
+  @observable orderBy: keyof IData = "UPDATED ON"
+  @observable order: any = "asc"
   totalCount = 0
   static apiService: ApiService
   constructor(private apiService: ApiService) {
@@ -28,7 +33,11 @@ export class TableViewModel implements ITableViewModel {
 
   @action.bound
   fetchData = async ({ pageNumber, pageSize }: { pageNumber: number; pageSize: number }) => {
-    const response = await this.apiService.fetchProductData(pageNumber, pageSize, this.searchString)
+    const sort = {
+      sortBY: this.orderBy,
+      sortOrder: this.order,
+    }
+    const response = await this.apiService.fetchProductData(pageNumber, pageSize, this.searchString, sort)
     runInAction(() => {
       this.data = response.data.items
       this.autoCompleteData = response.data.items
@@ -54,5 +63,15 @@ export class TableViewModel implements ITableViewModel {
   @action.bound
   setSearchString = (searchString: string) => {
     this.searchString = searchString
+  }
+
+  @action.bound
+  setOrderBy = (orderBy: keyof IData) => {
+    this.orderBy = orderBy
+  }
+
+  @action.bound
+  setOrder = (order: TOrder) => {
+    this.order = order
   }
 }

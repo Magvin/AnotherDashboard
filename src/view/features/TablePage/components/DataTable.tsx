@@ -1,7 +1,7 @@
 import * as React from "react"
 import Table from "@mui/material/Table"
 import { DataTableHead } from "./DataHeader"
-import { IData, TOrder } from "./types"
+import { IData } from "./types"
 import { headerCells } from "../constants"
 import { DataBody } from "./DataBody"
 import { Box, TablePagination, IconButton, TableContainer } from "@mui/material"
@@ -32,7 +32,7 @@ export const DataTable = observer(() => {
   }
   return (
     <Box sx={{ width: "100%" }}>
-      <TableContainer sx={{ maxHeight: 900 }}>
+      <TableContainer sx={{ maxHeight: 1000 }}>
         <StyledTable sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <DataTableHead
             numSelected={selected.length}

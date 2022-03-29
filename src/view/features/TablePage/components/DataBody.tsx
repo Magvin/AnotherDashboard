@@ -1,5 +1,5 @@
 import * as React from "react"
-import { TableCell, Menu, MenuItem, TableBody, TableRow, IconButton, Avatar, styled, Box } from "@mui/material"
+import { TableCell, Menu, MenuItem, TableBody, TableRow, IconButton, Avatar, styled } from "@mui/material"
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import useHomeViewModel from "../../../../viewModels/useHomeViewModel"
@@ -8,7 +8,6 @@ import { TypographyAdmix } from "../../../../common/app/components/typography"
 import { AntSwitch } from "../../../../common/app/components/antSwitch"
 import { useNavigate } from "react-router"
 import { CustomNoRowsOverlay } from "./emptyMessage"
-import CircularProgress from "@mui/material/CircularProgress"
 import { observer } from "mobx-react"
 export const DataBody = observer(() => {
   const { data } = useHomeViewModel()
@@ -22,8 +21,8 @@ export const DataBody = observer(() => {
     if (data.length === 0) {
       return <CustomNoRowsOverlay />
     }
-    return data.map((item) => {
-      const open = Boolean(anchorEl)
+    return data.map((app) => {
+      const open = Boolean(anchorEl?.id === app._id)
       const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
       }
@@ -31,21 +30,21 @@ export const DataBody = observer(() => {
         setAnchorEl(null)
       }
       return (
-        <TableRow key={item.id}>
+        <TableRow key={app.id}>
           <TableCell align="left" width="75px">
-            <AntSwitch disabled={item.isDeleted} size="small" />
+            <AntSwitch disabled={app.isDeleted} size="small" />
           </TableCell>
           <TableCell align="left">
             <div style={{ display: "flex", width: "100%" }}>
-              {item.googlePlayStoreInfo ? (
+              {app.googlePlayStoreInfo ? (
                 <Avatar
                   variant="square"
                   sx={{ borderRadius: "8px", marginRight: "5.25px" }}
-                  src={item.googlePlayStoreInfo.icon}
+                  src={app.googlePlayStoreInfo.icon}
                 />
               ) : (
                 <Avatar variant="square" sx={{ borderRadius: "8px", marginRight: "5.25px" }}>
-                  {item.title.charAt(0)}
+                  {app.title.charAt(0)}
                 </Avatar>
               )}
               <div style={{ display: "flex", flexDirection: "column" }}>
@@ -60,18 +59,18 @@ export const DataBody = observer(() => {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {item.title}
+                  {app.title}
                 </TypographyAdmix>
-                {item.googlePlayStoreInfo && (
+                {app.googlePlayStoreInfo && (
                   <TypographyAdmix type="small" color="#858798">
-                    {item.googlePlayStoreInfo.studio}
+                    {app.googlePlayStoreInfo.studio}
                   </TypographyAdmix>
                 )}
               </div>
             </div>
           </TableCell>
           <TableCell align="left" width="120px">
-            {item.featured ? (
+            {app.featured ? (
               <div
                 style={{
                   display: "flex",
@@ -87,28 +86,28 @@ export const DataBody = observer(() => {
             ) : null}
           </TableCell>
           <TableCell align="left" width="130px">
-            <b>{convertToInternationalCurrencySystem(item.avails)}</b>
+            <b>{convertToInternationalCurrencySystem(app.avails)}</b>
           </TableCell>
           <TableCell align="left" width="140px">
-            {convertDateToIsoString(new Date(item.createdAt))}
+            {convertDateToIsoString(new Date(app.createdAt))}
           </TableCell>
           <TableCell align="left" width="150px">
-            {convertDateToIsoString(new Date(item.updatedAt))}
+            {convertDateToIsoString(new Date(app.updatedAt))}
           </TableCell>
           <TableCell align="left">
-            <b>{item.googlePlayStoreInfo?.contentRating || ""}</b>
+            <b>{app.googlePlayStoreInfo?.contentRating || ""}</b>
           </TableCell>
           <TableCell align="left" width="100px">
             <StyledTableCell>
-              {item.tags &&
-                item.tags.map((tag: string, index: number) => {
+              {app.tags &&
+                app.tags.map((tag: string, index: number) => {
                   return <span key={index}>{tag} </span>
                 })}
             </StyledTableCell>
           </TableCell>
           <TableCell sx={{ height: "45px", display: "flex", alignItems: "baseline" }}>
             <IconButton
-              id="basic-button"
+              id={app._id}
               aria-controls={open ? "basic-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
@@ -135,7 +134,7 @@ export const DataBody = observer(() => {
                   ACTIONS
                 </TypographyAdmix>
               </ActionedButtonWrapper>
-              <MenuItem sx={{ width: "120px" }} onClick={() => navigate(`/app/${item._id}`)}>
+              <MenuItem sx={{ width: "120px" }} onClick={() => navigate(`/app/${app._id}`)}>
                 <MenuItemIconWrapper>
                   <BorderColorOutlinedIcon />
                   Edit

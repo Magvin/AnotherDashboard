@@ -17,6 +17,7 @@ export const TypographyAdmix = ({
     | "semiBodyBold"
     | "bodySmallL24"
     | "semiBodyBoldL18"
+    | "smallL21"
   children: React.ReactNode
   color?: string
   style?: React.CSSProperties
@@ -63,6 +64,11 @@ export const TypographyAdmix = ({
         {children}
       </SemiBodyBoldL18>
     ),
+    smallL21: (
+      <SmallL21 color={color} style={style} {...otherProps}>
+        {children}
+      </SmallL21>
+    ),
   }
   return typographyMap[type]
 }
@@ -101,6 +107,12 @@ const BodySmallL24 = styled.span<{ color?: string }>`
 const Small = styled.span<{ color?: string }>`
   font-size: 13px;
   line-height: 18px;
+  font-weight: 600;
+  ${({ color }) => color && `color: ${color}`}
+`
+const SmallL21 = styled.span<{ color?: string }>`
+  font-size: 13px;
+  line-height: 21px;
   font-weight: 600;
   ${({ color }) => color && `color: ${color}`}
 `

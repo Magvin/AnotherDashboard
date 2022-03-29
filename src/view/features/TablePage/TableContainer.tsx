@@ -31,7 +31,7 @@ export const TableContainer = observer(() => {
         flexDirection: "column",
         height: "100%",
         backgroundColor: "#E5E5E5",
-        paddingTop: "75px",
+        padding: "75px 0",
         position: "relative",
       }}
     >

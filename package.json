@@ -1,7 +1,7 @@
 {
   "name": "mvvm-mobx-react",
   "version": "0.1.0",
-  "homepage": "https://magvin.github.io/AnotherDashboard",
+  "homepage": "https://magvin.github.io/AnotherDashboard/",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.3",

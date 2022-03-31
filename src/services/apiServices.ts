@@ -1,5 +1,7 @@
 import axios from "axios"
 
+const isDevelopment = process.env.NODE_ENV === "development"
+const urlToFetch = isDevelopment ? "http://localhost:3000/" : "https://magvin.github.io/"
 export class ApiService {
   apiKey: string | undefined = process.env.REACT_APP_API_KEY
 
@@ -36,7 +38,7 @@ export class ApiService {
       bodyQuery.sorts = [{ field: sort.sortBY, desc: sort.sortOrder === "desc" ? true : false }]
     }
 
-    const response = await this.transport.post("http://localhost:3000/challenge-v1/fetch", bodyQuery, { headers })
+    const response = await this.transport.post(`${urlToFetch}challenge-v1/fetch`, bodyQuery, { headers })
     const data = response.data
     return data
   }
@@ -47,7 +49,7 @@ export class ApiService {
     const headers = {
       "admix-api-key": this.apiKey,
     }
-    const response = await this.transport.put(`http://localhost:3000/challenge-v1/enrich/update/${id}`, bodyQuery, {
+    const response = await this.transport.put(`${urlToFetch}challenge-v1/enrich/update/${id}`, bodyQuery, {
       headers,
     })
     const data = response.data

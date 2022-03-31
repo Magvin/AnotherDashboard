@@ -22,7 +22,7 @@ ReactDOM.render(
     <ThemeProvider theme={Theme}>
       <Observer>
         {() => (
-          <BrowserRouter>
+          <BrowserRouter basename={process.env.PUBLIC_URL}>
             <Routes>
               {application.features.map((feature) => (
                 <Route key={feature.key} path={feature.path} element={feature.getView()} />

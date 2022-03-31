@@ -4,11 +4,9 @@ import SearchIcon from "@mui/icons-material/Search"
 import { Box, styled } from "@mui/system"
 import useHomeViewModel from "../../../../viewModels/useHomeViewModel"
 import { useAsync } from "react-async"
-import { useNavigate } from "react-router"
 import debounce from "lodash/debounce"
 import { Link } from "react-router-dom"
 import { TypographyAdmix } from "../../../../common/app/components/typography"
-import { observer } from "mobx-react"
 import { action } from "mobx"
 
 const SEARCH_DEBOUNCE_TIME = 300
@@ -28,9 +26,9 @@ export const AutoCompleteSearch = () => {
 
   const getData = React.useCallback(async () => {
     return await fetchData({ pageNumber, pageSize })
-  }, [searchString, fetchData])
+  }, [fetchData, pageNumber, pageSize])
 
-  const { isLoading, run: loadData } = useAsync({
+  const { run: loadData } = useAsync({
     deferFn: getData,
   })
 
@@ -40,7 +38,9 @@ export const AutoCompleteSearch = () => {
         loadData()
       }
     }),
-    [localSearchString, loadData]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    [localSearchString, loadData, searchString]
   )
 
   return (
@@ -51,6 +51,7 @@ export const AutoCompleteSearch = () => {
             <SearchIcon />
           </StyledIcon>
           <TextField
+            fullWidth
             label="Search app name"
             onChange={(e) => {
               setOpen(true)

@@ -1,10 +1,10 @@
 export const mockFetchProductData = {
   data: {
-    totalCount: 492,
+    totalCount: 4,
     items: [
       {
         _id: "5fb3e231f8b0bfb7a0705d3a",
-        title: "Space Gangster ",
+        title: "Space Gangster",
         description: "Test update",
         tags: [
           "Adventure",

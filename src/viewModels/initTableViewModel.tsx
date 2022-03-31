@@ -1,6 +1,6 @@
 import { API_SERVICE_KEY, TABLE_SERVICE_KEY } from "../constants/application"
 import { ApiService } from "../services/apiServices"
-import { EditApp } from "../view/Details"
+import { EditApp } from "../view/features/EditPage/EditPage"
 import { TableContainer } from "../view/features/TablePage/TableContainer"
 import { TableViewModel } from "./tableViewModel"
 

@@ -13,3 +13,7 @@ export function convertToInternationalCurrencySystem(labelValue: number) {
   }
   return ""
 }
+
+export const convertDateToIsoString = (date: Date) => {
+  return date.toLocaleString("en-GB", { timeZone: "UTC", month: "numeric", day: "numeric", year: "numeric" })
+}

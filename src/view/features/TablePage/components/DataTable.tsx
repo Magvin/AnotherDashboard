@@ -1,7 +1,7 @@
 import * as React from "react"
 import Table from "@mui/material/Table"
 import { DataTableHead } from "./DataHeader"
-import { IData } from "./types"
+import { EColumn, EOrder, IData } from "./types"
 import { headerCells } from "../constants"
 import { DataBody } from "./DataBody"
 import { Box, TablePagination, IconButton, TableContainer } from "@mui/material"
@@ -16,15 +16,15 @@ export const DataTable = observer(() => {
   const { pageNumber, pageSize, setPageNumber, setPageSize, totalPages, orderBy, setOrderBy, order, setOrder } =
     useHomeViewModel()
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IData) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+  const handleRequestSort = (_event: React.MouseEvent<unknown>, property: keyof IData) => {
+    const isAsc = orderBy === property && order === EOrder.ASC
+    setOrder(isAsc ? EOrder.DESC : EOrder.ASC)
     setOrderBy(property)
   }
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = [{ id: 1, name: "STATUS" }].map((n) => n.name)
+      const newSelecteds = [{ id: 1, name: EColumn.STATUS }].map((n) => n.name)
       setSelected(newSelecteds)
       return
     }
@@ -68,7 +68,7 @@ export const DataTable = observer(() => {
           ActionsComponent={(props) => {
             const { page } = props
             return (
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Box sx={{ display: "flex", justifyContent: "flex-end", fontFamily: "Mulish" }}>
                 <StyledIconButton
                   size="small"
                   disabled={page === 1}

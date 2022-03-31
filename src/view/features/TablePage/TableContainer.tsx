@@ -11,7 +11,7 @@ export const TableContainer = observer(() => {
 
   const getData = React.useCallback(async () => {
     return await fetchData({ pageNumber, pageSize })
-  }, [pageNumber, pageSize])
+  }, [pageNumber, pageSize, fetchData])
 
   const { isLoading, run: loadData } = useAsync({
     deferFn: getData,
@@ -21,6 +21,13 @@ export const TableContainer = observer(() => {
     loadData()
   }, [pageNumber, pageSize, order, orderBy])
 
+  if (isLoading) {
+    return (
+      <Backdrop sx={{ color: "#fff", zIndex: () => 1 }} open={true} onClick={() => {}}>
+        <CircularProgress color="inherit" data-testid="loading" />
+      </Backdrop>
+    )
+  }
   return (
     <Box
       data-testid="table-page"
@@ -35,11 +42,6 @@ export const TableContainer = observer(() => {
         position: "relative",
       }}
     >
-      {isLoading && (
-        <Backdrop sx={{ color: "#fff", zIndex: () => 1 }} open={true} onClick={() => {}}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )}
       <Paper sx={{ borderRadius: "16px", width: "1292px", marginBottom: "22px", position: "relative" }} elevation={0}>
         <AutoCompleteSearch />
       </Paper>

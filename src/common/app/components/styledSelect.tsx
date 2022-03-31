@@ -134,21 +134,23 @@ const CustomSelect = React.forwardRef(function CustomSelect<TValue>(
   return <SelectUnstyled {...props} ref={ref} components={components} />
 }) as <TValue>(props: SelectUnstyledProps<TValue> & React.RefAttributes<HTMLUListElement>) => JSX.Element
 
-function renderValue(option: SelectOption<string> | null) {
+function renderValue(option: SelectOption<unknown> | null, placeholder: string) {
   if (option == null) {
-    return <span>Choose category</span>
+    return <span>{placeholder}</span>
   }
-
-  return (
-    <span>
-      {option.label} ({option.value})
-    </span>
-  )
+  if (typeof option === "object") {
+    const typedOption: SelectOption<unknown> | null = option
+    return (
+      <span>
+        {typedOption.label} ({typedOption.value})
+      </span>
+    )
+  }
 }
 
-export default function UnstyledSelectSimple({ value }: any) {
+export default function UnstyledSelectSimple({ value, placeholder }: any) {
   return (
-    <CustomSelect renderValue={renderValue}>
+    <CustomSelect renderValue={(option) => renderValue(option, placeholder)}>
       {value.map((val: any) => (
         <StyledOption value={val.value}>{val.title}</StyledOption>
       ))}

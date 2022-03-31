@@ -3,7 +3,7 @@ import { TableCell, Menu, MenuItem, TableBody, TableRow, IconButton, Avatar, sty
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import useHomeViewModel from "../../../../viewModels/useHomeViewModel"
-import { convertToInternationalCurrencySystem } from "../../../utils"
+import { convertDateToIsoString, convertToInternationalCurrencySystem } from "../../../utils"
 import { TypographyAdmix } from "../../../../common/app/components/typography"
 import { AntSwitch } from "../../../../common/app/components/antSwitch"
 import { useNavigate } from "react-router"
@@ -11,9 +11,7 @@ import { CustomNoRowsOverlay } from "./emptyMessage"
 import { observer } from "mobx-react"
 export const DataBody = observer(() => {
   const { data } = useHomeViewModel()
-  const convertDateToIsoString = (date: Date) => {
-    return date.toLocaleString("en-GB", { timeZone: "UTC", month: "numeric", day: "numeric", year: "numeric" })
-  }
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const navigate = useNavigate()
 
@@ -25,29 +23,44 @@ export const DataBody = observer(() => {
       const open = Boolean(anchorEl?.id === app._id)
       const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
+        document.querySelectorAll("tr").forEach((tr) => {
+          if (tr.id === app._id) {
+            tr.style.backgroundColor = "#EFF1F4"
+          }
+        })
       }
       const handleClose = () => {
+        document.querySelectorAll("tr").forEach((tr) => {
+          if (tr.id === app._id) {
+            tr.style.backgroundColor = "#fff"
+          }
+        })
         setAnchorEl(null)
       }
       return (
-        <TableRow key={app.id}>
+        <TableRow key={app._id} id={app._id}>
           <TableCell align="left" width="75px">
-            <AntSwitch disabled={app.isDeleted} size="small" />
+            <AntSwitch defaultChecked={app.isDeleted} size="small" />
           </TableCell>
           <TableCell align="left">
-            <div style={{ display: "flex", width: "100%" }}>
+            <span style={{ display: "flex", width: "100%" }}>
               {app.googlePlayStoreInfo ? (
                 <Avatar
                   variant="square"
                   sx={{ borderRadius: "8px", marginRight: "5.25px" }}
                   src={app.googlePlayStoreInfo.icon}
+                  data-testid="google-play-store-icon"
                 />
               ) : (
-                <Avatar variant="square" sx={{ borderRadius: "8px", marginRight: "5.25px" }}>
+                <Avatar
+                  variant="square"
+                  sx={{ borderRadius: "8px", marginRight: "5.25px" }}
+                  data-testid="square-with-first-app-name"
+                >
                   {app.title.charAt(0)}
                 </Avatar>
               )}
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <span style={{ display: "flex", flexDirection: "column" }}>
                 <TypographyAdmix
                   type="bodyBold"
                   color="#2622B5"
@@ -66,12 +79,12 @@ export const DataBody = observer(() => {
                     {app.googlePlayStoreInfo.studio}
                   </TypographyAdmix>
                 )}
-              </div>
-            </div>
+              </span>
+            </span>
           </TableCell>
           <TableCell align="left" width="120px">
             {app.featured ? (
-              <div
+              <span
                 style={{
                   display: "flex",
                   gap: "4px",
@@ -82,7 +95,7 @@ export const DataBody = observer(() => {
                 <TypographyAdmix type="bodyBoldL18" color="#232747">
                   Featured
                 </TypographyAdmix>
-              </div>
+              </span>
             ) : null}
           </TableCell>
           <TableCell align="left" width="130px">
@@ -113,6 +126,7 @@ export const DataBody = observer(() => {
               aria-expanded={open ? "true" : undefined}
               onClick={handleClick}
               sx={{ background: "none !important" }}
+              data-testid="icon-button"
             >
               <MoreVertIcon />
             </IconButton>
@@ -134,7 +148,7 @@ export const DataBody = observer(() => {
                   ACTIONS
                 </TypographyAdmix>
               </ActionedButtonWrapper>
-              <MenuItem sx={{ width: "120px" }} onClick={() => navigate(`/app/${app._id}`)}>
+              <MenuItem sx={{ width: "120px" }} onClick={() => navigate(`/app/${app._id}`)} data-testid="edit-icon">
                 <MenuItemIconWrapper>
                   <BorderColorOutlinedIcon />
                   Edit

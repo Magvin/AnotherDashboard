@@ -1,5 +1,4 @@
 import axios from "axios"
-import { mockFetchProductData } from "./fixtures/mockFetchProductData"
 
 export class ApiService {
   apiKey: string | undefined = process.env.REACT_APP_API_KEY
@@ -41,11 +40,17 @@ export class ApiService {
     const data = response.data
     return data
   }
-  async updateProduct() {
-    const response = await fetch("http://localhost:3000/challenge-v1/fetch", {
-      method: "POST",
+  async updateProduct(id: string, bodyQuery: unknown) {
+    if (this.apiKey?.length === 0 || this.apiKey === undefined) {
+      throw Error("API key is not defined")
+    }
+    const headers = {
+      "admix-api-key": this.apiKey,
+    }
+    const response = await this.transport.put(`http://localhost:3000/challenge-v1/enrich/update/${id}`, bodyQuery, {
+      headers,
     })
-    const data = await response.json()
+    const data = response.data
     return data
   }
 }

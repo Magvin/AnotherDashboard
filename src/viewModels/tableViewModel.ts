@@ -7,6 +7,7 @@ export interface ITableViewModel {
   totalPages: number
   autoCompleteData: any[]
   fetchData: ({ pageNumber, pageSize, search }: { pageNumber: number; pageSize: number; search?: any }) => void
+  updateProduct: (id: string, bodyQuery: unknown) => void
   setPageNumber: (pageNumber: number) => void
   setPageSize: (pageSize: number) => void
   setSearchString: (searchString: string) => void
@@ -44,6 +45,11 @@ export class TableViewModel implements ITableViewModel {
 
       this.totalCount = response.data.totalCount
     })
+  }
+
+  @action.bound
+  updateProduct = async (id: string, bodyQuery: unknown) => {
+    await this.apiService.updateProduct(id, bodyQuery)
   }
 
   @computed

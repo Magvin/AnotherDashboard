@@ -4,7 +4,6 @@ import TableCell from "@mui/material/TableCell"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import TableSortLabel from "@mui/material/TableSortLabel"
-import Box from "@mui/material/Box"
 import { EnhancedTableProps, IData } from "./types"
 import { headerCells } from "../constants"
 import { TypographyAdmix } from "../../../../common/app/components/typography"
@@ -36,7 +35,7 @@ export function DataTableHead(props: EnhancedTableProps) {
                   return <OverideCodeIconStyle fontSize="small" />
                 }}
               >
-                <TypographyAdmix type="boldSmall" color="#858798">
+                <TypographyAdmix type="boldSmall" color="#858798" data-testid="table-header-label">
                   {headerCell.label}
                 </TypographyAdmix>
               </TableSortLabel>

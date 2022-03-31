@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/another-dashboard/static/css/main.ccb22163.css",
+    "main.js": "/another-dashboard/static/js/main.332db9f3.js",
+    "index.html": "/another-dashboard/index.html",
+    "main.ccb22163.css.map": "/another-dashboard/static/css/main.ccb22163.css.map",
+    "main.332db9f3.js.map": "/another-dashboard/static/js/main.332db9f3.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ccb22163.css",
+    "static/js/main.332db9f3.js"
+  ]
+}

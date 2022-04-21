@@ -9,4 +9,6 @@ then ```npm run start```
 
 All done!
 
+Note to myself. Need to fix all types and remove skeleton types
+
 

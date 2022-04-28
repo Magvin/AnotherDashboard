@@ -1,4 +1,5 @@
 import axios from "axios"
+import { IFiltersQuery, ISort, ISortQuery } from "./types"
 
 const isDevelopment = process.env.NODE_ENV === "development"
 const urlToFetch = isDevelopment ? "http://localhost:3000/" : "https://magvin.github.io/"
@@ -14,7 +15,7 @@ export class ApiService {
     },
   })
 
-  async fetchProductData(pageIndex: number, pageSize: number, search?: any, sort?: any) {
+  async fetchProductData(pageIndex: number, pageSize: number, search?: string, sort?: ISort) {
     if (this.apiKey?.length === 0 || this.apiKey === undefined) {
       throw Error("API key is not defined")
     }
@@ -24,8 +25,8 @@ export class ApiService {
     const bodyQuery: {
       pageIndex: number
       pageSize: number
-      filters?: any
-      sorts?: any
+      filters?: IFiltersQuery[]
+      sorts?: ISortQuery[]
     } = {
       pageIndex: pageIndex,
       pageSize: pageSize,

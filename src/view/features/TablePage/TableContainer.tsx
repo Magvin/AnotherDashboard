@@ -2,7 +2,7 @@ import { Backdrop, Box, CircularProgress, Paper } from "@mui/material"
 import { observer } from "mobx-react"
 import * as React from "react"
 import { useAsync } from "react-async"
-import useHomeViewModel from "../../../viewModels/useHomeViewModel"
+import useHomeViewModel from "../../../viewModels/useTableViewModel"
 import { AutoCompleteSearch } from "./components/autoComplete"
 import { DataTable } from "./components/DataTable"
 

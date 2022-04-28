@@ -7,7 +7,7 @@ import { DataBody } from "./DataBody"
 import { Box, TablePagination, IconButton, TableContainer } from "@mui/material"
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos"
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos"
-import useHomeViewModel from "../../../../viewModels/useHomeViewModel"
+import useHomeViewModel from "../../../../viewModels/useTableViewModel"
 import styled from "@emotion/styled"
 import { observer } from "mobx-react"
 

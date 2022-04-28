@@ -2,7 +2,7 @@ import * as React from "react"
 import { useNavigate, useParams } from "react-router"
 import Breadcrumbs from "@mui/material/Breadcrumbs"
 import Link from "@mui/material/Link"
-import useHomeViewModel from "../../../viewModels/useHomeViewModel"
+import useHomeViewModel from "../../../viewModels/useTableViewModel"
 import { Divider, Box, styled, TextField, Button, Backdrop, CircularProgress } from "@mui/material"
 import { TypographyAdmix } from "../../../common/app/components/typography"
 import { AntSwitch } from "../../../common/app/components/antSwitch"
@@ -138,7 +138,7 @@ export const EditApp = () => {
             <label htmlFor="app_id">
               <TypographyAdmix type="smallL21">App ID</TypographyAdmix>
             </label>
-            <StyledInput id="app_id" defaultValue={app._id} disabled />
+            <StyledInput id="app_id" defaultValue={app && app._id} disabled />
           </InputLabelWrapper>
           <InputLabelWrapper margin="24px">
             <label htmlFor="app_category">
@@ -146,16 +146,19 @@ export const EditApp = () => {
             </label>
             <UnstyledSelectSimple value={[{ value: 1, title: "Some" }]} placeholder="Choose category" />
             <Box sx={{ marginTop: "16px" }}>
-              {app.googlePlayStoreInfo?.genre.split(",").map((item: string, index: number) => (
-                <StyledChip
-                  key={index}
-                  label={item}
-                  onClick={handleClick}
-                  onDelete={handleDelete}
-                  deleteIcon={<CloseIcon />}
-                  sx={{ width: "120px", height: "24px", marginRight: "8px" }}
-                />
-              ))}
+              {app &&
+                app.googlePlayStoreInfo?.genre
+                  .split(",")
+                  .map((item: string, index: number) => (
+                    <StyledChip
+                      key={index}
+                      label={item}
+                      onClick={handleClick}
+                      onDelete={handleDelete}
+                      deleteIcon={<CloseIcon />}
+                      sx={{ width: "120px", height: "24px", marginRight: "8px" }}
+                    />
+                  ))}
             </Box>
           </InputLabelWrapper>
         </Box>
@@ -172,16 +175,17 @@ export const EditApp = () => {
             </label>
             <UnstyledSelectSimple value={[{ value: 1, title: "Some" }]} placeholder="Choose keywords" />
             <Box sx={{ marginTop: "16px" }}>
-              {app.tags?.map((item: string, index: number) => (
-                <StyledChip
-                  key={index}
-                  label={item}
-                  onClick={handleClick}
-                  onDelete={handleDelete}
-                  deleteIcon={<CloseIcon />}
-                  sx={{ width: "120px", height: "24px", marginRight: "8px", marginBottom: "11px" }}
-                />
-              ))}
+              {app &&
+                app.tags?.map((item: string, index: number) => (
+                  <StyledChip
+                    key={index}
+                    label={item}
+                    onClick={handleClick}
+                    onDelete={handleDelete}
+                    deleteIcon={<CloseIcon />}
+                    sx={{ width: "120px", height: "24px", marginRight: "8px", marginBottom: "11px" }}
+                  />
+                ))}
             </Box>
           </InputLabelWrapper>
         </Box>

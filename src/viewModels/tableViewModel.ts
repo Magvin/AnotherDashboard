@@ -1,12 +1,12 @@
 import { ApiService } from "../services/apiServices"
 import { action, computed, makeAutoObservable, observable, runInAction } from "mobx"
-import { TPost } from "./types"
-import { IData, TOrder } from "../view/features/TablePage/components/types"
+import { EOrder, IData, TOrder } from "../view/features/TablePage/components/types"
+import { IItems, IGameData } from "../services/types"
 export interface ITableViewModel {
-  data: TPost[]
-  totalPages: number
-  autoCompleteData: any[]
-  fetchData: ({ pageNumber, pageSize, search }: { pageNumber: number; pageSize: number; search?: any }) => void
+  data: IItems[]
+  totalPages: IGameData["totalCount"]
+  autoCompleteData: IItems[]
+  fetchData: ({ pageNumber, pageSize, search }: { pageNumber: number; pageSize: number; search?: string }) => void
   updateProduct: (id: string, bodyQuery: unknown) => void
   setPageNumber: (pageNumber: number) => void
   setPageSize: (pageSize: number) => void
@@ -19,13 +19,13 @@ export interface ITableViewModel {
 }
 
 export class TableViewModel implements ITableViewModel {
-  @observable.ref data: any[] = []
+  @observable.ref data: IItems[] = []
   @observable pageNumber: number = 1
   @observable pageSize: number = 10
-  @observable autoCompleteData: any[] = []
+  @observable autoCompleteData: IItems[] = []
   @observable searchString: string = ""
   @observable orderBy: keyof IData = "UPDATED ON"
-  @observable order: any = "asc"
+  @observable order: TOrder = EOrder.ASC
   totalCount = 0
   static apiService: ApiService
   constructor(private apiService: ApiService) {
